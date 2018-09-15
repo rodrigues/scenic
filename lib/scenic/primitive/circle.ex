@@ -24,18 +24,15 @@ defmodule Scenic.Primitive.Circle do
 
   # --------------------------------------------------------
   def verify(data) do
-    try do
-      normalize(data)
-      {:ok, data}
-    rescue
-      _ -> :invalid_data
+    case normalize(data) do
+      :error -> :invalid_data
+      data -> {:ok, data}
     end
   end
 
   # --------------------------------------------------------
-  def normalize(radius) when is_number(radius) do
-    radius
-  end
+  def normalize(radius) when is_number(radius), do: radius
+  def normalize(_), do: :error
 
   # ============================================================================
   def valid_styles(), do: @styles

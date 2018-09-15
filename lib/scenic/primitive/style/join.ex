@@ -21,11 +21,9 @@ defmodule Scenic.Primitive.Style.Join do
   # named color
 
   def verify(stroke) do
-    try do
-      normalize(stroke)
-      true
-    rescue
-      _ -> false
+    case normalize(stroke) do
+      :error -> false
+      _ -> true
     end
   end
 
@@ -34,4 +32,5 @@ defmodule Scenic.Primitive.Style.Join do
   def normalize(:miter), do: :miter
   def normalize(:round), do: :round
   def normalize(:bevel), do: :bevel
+  def normalize(_), do: :error
 end

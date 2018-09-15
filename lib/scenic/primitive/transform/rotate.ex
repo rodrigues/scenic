@@ -22,15 +22,14 @@ defmodule Scenic.Primitive.Transform.Rotate do
 
   # --------------------------------------------------------
   def verify(angle) do
-    try do
-      normalize(angle)
-      true
-    rescue
-      _ -> false
+    case normalize(angle) do
+      :error -> false
+      _ -> true
     end
   end
 
   # --------------------------------------------------------
   # normalize named stipples
   def normalize(a) when is_number(a), do: a
+  def normalize(_), do: :error
 end

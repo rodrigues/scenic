@@ -21,16 +21,13 @@ defmodule Scenic.Primitive.Style.FontBlur do
 
   # --------------------------------------------------------
   def verify(blur) do
-    try do
-      normalize(blur)
-      true
-    rescue
-      _ -> false
+    case normalize(blur) do
+      :error -> false
+      _ -> true
     end
   end
 
   # --------------------------------------------------------
-  def normalize(blur) when is_number(blur) and blur >= 0 do
-    blur
-  end
+  def normalize(blur) when is_number(blur) and blur >= 0, do: blur
+  def normalize(_), do: :error
 end

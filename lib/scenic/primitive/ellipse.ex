@@ -24,11 +24,9 @@ defmodule Scenic.Primitive.Ellipse do
 
   # --------------------------------------------------------
   def verify(data) do
-    try do
-      normalize(data)
-      {:ok, data}
-    rescue
-      _ -> :invalid_data
+    case normalize(data) do
+      :error -> :invalid_data
+      data -> {:ok, data}
     end
   end
 
@@ -36,6 +34,8 @@ defmodule Scenic.Primitive.Ellipse do
   def normalize({r1, r2} = data) when is_number(r1) and is_number(r2) do
     data
   end
+
+  def normalize(_), do: :error
 
   # ============================================================================
   def valid_styles(), do: @styles

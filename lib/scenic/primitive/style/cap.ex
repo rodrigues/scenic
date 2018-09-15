@@ -21,11 +21,9 @@ defmodule Scenic.Primitive.Style.Cap do
   # named color
 
   def verify(stroke) do
-    try do
-      normalize(stroke)
-      true
-    rescue
-      _ -> false
+    case normalize(stroke) do
+      :error -> false
+      _ -> true
     end
   end
 
@@ -34,4 +32,5 @@ defmodule Scenic.Primitive.Style.Cap do
   def normalize(:butt), do: :butt
   def normalize(:round), do: :round
   def normalize(:square), do: :square
+  def normalize(_), do: :error
 end

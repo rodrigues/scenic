@@ -27,11 +27,9 @@ defmodule Scenic.Primitive.Style.TextAlign do
 
   # --------------------------------------------------------
   def verify(align) do
-    try do
-      normalize(align)
-      true
-    rescue
-      _ -> false
+    case normalize(align) do
+      :error -> false
+      _ -> true
     end
   end
 
@@ -51,4 +49,6 @@ defmodule Scenic.Primitive.Style.TextAlign do
   def normalize(:left_bottom = align), do: align
   def normalize(:right_bottom = align), do: align
   def normalize(:center_bottom = align), do: align
+
+  def normalize(_), do: :error
 end

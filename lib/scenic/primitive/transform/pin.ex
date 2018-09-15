@@ -19,15 +19,14 @@ defmodule Scenic.Primitive.Transform.Pin do
 
   # --------------------------------------------------------
   def verify(percent) do
-    try do
-      normalize(percent)
-      true
-    rescue
-      _ -> false
+    case normalize(percent) do
+      :error -> false
+      _ -> true
     end
   end
 
   # --------------------------------------------------------
   # normalize named stipples
   def normalize({x, y}) when is_number(x) and is_number(y), do: {x, y}
+  def normalize(_), do: :error
 end

@@ -24,11 +24,9 @@ defmodule Scenic.Primitive.Style.Scissor do
   # named color
 
   def verify(data) do
-    try do
-      normalize(data)
-      true
-    rescue
-      _ -> false
+    case normalize(data) do
+      :error -> false
+      _ -> true
     end
   end
 
@@ -37,4 +35,6 @@ defmodule Scenic.Primitive.Style.Scissor do
   def normalize({w, h}) when is_number(w) and is_number(h) do
     {w, h}
   end
+
+  def normalize(_), do: :error
 end

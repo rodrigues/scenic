@@ -21,11 +21,9 @@ defmodule Scenic.Primitive.Style.FontSize do
 
   # --------------------------------------------------------
   def verify(font) do
-    try do
-      normalize(font)
-      true
-    rescue
-      _ -> false
+    case normalize(font) do
+      :error -> false
+      _ -> true
     end
   end
 
@@ -33,4 +31,6 @@ defmodule Scenic.Primitive.Style.FontSize do
   def normalize(point_size) when is_number(point_size) and point_size >= 6 do
     point_size
   end
+
+  def normalize(_), do: :error
 end

@@ -26,11 +26,9 @@ defmodule Scenic.Primitive.Arc do
 
   # --------------------------------------------------------
   def verify(data) do
-    try do
-      normalize(data)
-      {:ok, data}
-    rescue
-      _ -> :invalid_data
+    case normalize(data) do
+      :error -> :invalid_data
+      data -> {:ok, data}
     end
   end
 
@@ -38,6 +36,8 @@ defmodule Scenic.Primitive.Arc do
   def normalize({radius, start, finish} = data)
       when is_number(start) and is_number(finish) and is_number(radius),
       do: data
+
+  def normalize(_), do: :error
 
   # ============================================================================
   def valid_styles(), do: @styles
